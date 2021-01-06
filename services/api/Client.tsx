@@ -34,6 +34,8 @@ class Client {
                 const token = LocalStorage.getInstance().getAPiKey()
                 if(token.length > 0) {
                     config.headers.Authorization = 'Bearer ' + token
+                }else{
+                    config.headers.Authorization = 'Basic ' + toBase64("marksheekey@hotmail.com" + ":" + "sonycat01")
                 }
                 return config
             },
@@ -71,7 +73,7 @@ class Client {
 export default Client
 
 export interface Callback{
-    result: (data: any) => void
+    onResult: (data: any) => void
     onError: (message:string) => void
     onLoading: (loading: boolean) => void
 }

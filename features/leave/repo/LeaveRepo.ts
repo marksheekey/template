@@ -19,7 +19,7 @@ export default class LeaveRepo {
                         console.log("leave:",leave.start_date)
                     }
                 }
-                callback.result(leaveUI)
+                callback.onResult(leaveUI)
             }
         ).finally( () => {
             callback.onLoading(false)
