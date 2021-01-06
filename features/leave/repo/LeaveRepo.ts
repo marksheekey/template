@@ -1,4 +1,3 @@
-import LeaveAPI from "../../../services/api/leaveapi/LeaveAPI";
 import {LeaveUI} from "./LeaveUI";
 import {Callback} from "../../../services/Callback";
 import {Leave} from "../../../services/api/classes/Leave";
@@ -14,6 +13,7 @@ export default class LeaveRepo {
             callback.onError(error)
         }).then((data) => {
                 if (data) {
+                    leaveUI = data.map(leaveUI)
                     for (let leave of data) {
                         let item:LeaveUI = {
                             key : "key"+leave.id,
@@ -29,6 +29,14 @@ export default class LeaveRepo {
         ).finally( () => {
             callback.onLoading(false)
         })
+    }
+}
+
+function createLeaveUI(leave: Leave) : LeaveUI {
+    return {
+        key : "key"+leave.id,
+        start: leave.start_date,
+        end: leave.end_date
     }
 }
 
