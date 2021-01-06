@@ -15,7 +15,7 @@ class AxiosClient {
 
         this._initializeResponseInterceptor();
         this._authInterceptor();
-        //this._logger()
+        this._logger()
         this._customHeader()
     }
 
@@ -32,8 +32,6 @@ class AxiosClient {
                 const token = LocalStorage.getInstance().getAPiKey()
                 if(token.length > 0) {
                     config.headers.Authorization = 'Bearer ' + token
-                }else{
-                    config.headers.Authorization = 'Basic ' + toBase64("marksheekey@hotmail.com" + ":" + "sonycat01")
                 }
                 return config
             },
@@ -64,7 +62,7 @@ class AxiosClient {
     private _handleResponse = ({data}: AxiosResponse) => data;
 
     protected _handleError = (error: any) => {
-        return Promise.reject(error);
+        return Promise.reject(error.toString());
     };
 }
 

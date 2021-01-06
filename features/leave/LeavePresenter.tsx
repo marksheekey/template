@@ -1,12 +1,13 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import LeaveRepo from "./repo/LeaveRepo";
 import {LeaveUI} from "./repo/LeaveUI";
-import LeaveView from "./LeaveView";
 import LeaveAPI from "../../services/api/leaveapi/LeaveAPI";
 import {Callback} from "../../services/Callback";
+import {LeaveView} from "./LeaveView";
 
 export const LeavePresenter: React.FunctionComponent = () => {
     const leaveRepo = new LeaveRepo(new LeaveAPI())
+    const [leave, setLeave] = useState([] as LeaveUI[])
     useEffect(() => {
         leaveRepo.fetchLeave("2020-01-01","2020-01-31",new class implements Callback {
             onLoading(loading: Boolean){
@@ -21,11 +22,12 @@ export const LeavePresenter: React.FunctionComponent = () => {
             }
             onResult(data: LeaveUI[]){
                 //pass this data to the view
+                setLeave(data)
             }
         })
     }, [])
 
     return (
-       <LeaveView />
+       <LeaveView leave={leave}/>
     )
 }

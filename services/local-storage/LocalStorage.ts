@@ -18,7 +18,8 @@ export class LocalStorage{
     }
 
     public getAPiKey() : string {
-        return this.api_key
+        return "psPMbNKnkrFH8ExOBAEiJJyF2lPn5UbAq18FC4hjKA9AaWuNwAny5TXIm3bhMLAL"
+        //return this.api_key
     }
 
     public saveCredentials(user: string, password: string){
@@ -39,7 +40,8 @@ export class LocalStorage{
     }
 
     public getAccount() {
-        return this.account
+        return 44860
+        //return this.account
     }
 
     private saveValue(key: string, value:string){

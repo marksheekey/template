@@ -15,7 +15,13 @@ export default class LeaveRepo {
         }).then((data) => {
                 if (data) {
                     for (let leave of data) {
-                        console.log("leave:",leave.start_date)
+                        let item:LeaveUI = {
+                            key : "key"+leave.id,
+                            start: leave.start_date,
+                            end: leave.end_date
+                        }
+                        leaveUI.push(item)
+                        console.log("leave:",leave.id)
                     }
                 }
                 callback.onResult(leaveUI)

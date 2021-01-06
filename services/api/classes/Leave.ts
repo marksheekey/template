@@ -1,5 +1,6 @@
 
-export class Leave{
-    start_date?: string
-    end_date?: string
+export type Leave = {
+    id: string
+    start_date: string
+    end_date: string
 }
