@@ -1,11 +1,8 @@
 import axios, {AxiosInstance, AxiosResponse} from 'axios'
 import {apiConfig} from './config'
 import {LocalStorage} from '../local-storage/LocalStorage'
-import {Base64, toBase64} from "js-base64";
-import {singleton} from "tsyringe";
 
-@singleton()
-class Client {
+class AxiosClient {
     public readonly instance: AxiosInstance;
 
     public constructor() {
@@ -68,10 +65,10 @@ class Client {
     };
 }
 
-export default Client
+export default AxiosClient
 
 export interface Callback{
-    result: (data: any) => void
+    onResult: (data: any) => void
     onError: (message:string) => void
     onLoading: (loading: boolean) => void
 }

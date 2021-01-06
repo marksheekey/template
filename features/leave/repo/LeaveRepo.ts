@@ -1,11 +1,9 @@
-import Client, {Callback} from "../../../services/api/Client";
 import LeaveAPI from "../../../services/api/leaveapi/LeaveAPI";
 import {LeaveUI} from "./LeaveUI";
-import {inject, injectable} from "tsyringe";
+import {Callback} from "../../../services/api/AxiosClient";
 
-@injectable()
 export default class LeaveRepo {
-    public constructor(@inject("LeaveAPI") private api: LeaveAPI) {
+    public constructor(private api: LeaveAPI) {
         this.api = api
     }
     public async fetchLeave(startDate: string, endDate: string, callback: Callback) {
@@ -19,7 +17,7 @@ export default class LeaveRepo {
                         console.log("leave:",leave.start_date)
                     }
                 }
-                callback.result(leaveUI)
+                callback.onResult(leaveUI)
             }
         ).finally( () => {
             callback.onLoading(false)
