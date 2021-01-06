@@ -1,9 +1,10 @@
 import LeaveAPI from "../../../services/api/leaveapi/LeaveAPI";
 import {LeaveUI} from "./LeaveUI";
 import {Callback} from "../../../services/Callback";
+import {Leave} from "../../../services/api/classes/Leave";
 
 export default class LeaveRepo {
-    public constructor(private api: LeaveAPI) {
+    public constructor(private api: ILeave) {
         this.api = api
     }
     public async fetchLeave(startDate: string, endDate: string, callback: Callback) {
@@ -23,4 +24,8 @@ export default class LeaveRepo {
             callback.onLoading(false)
         })
     }
+}
+
+export interface ILeave{
+    getLeave(startDate:string, endDate:string): Promise<Leave[]>
 }
