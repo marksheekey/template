@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import "reflect-metadata";
-import LeavePresenter from "./features/leave/LeavePresenter";
+import {LeavePresenter} from "./features/leave/LeavePresenter";
+
 
 export default function App() {
   return (

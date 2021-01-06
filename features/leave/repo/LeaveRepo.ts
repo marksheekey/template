@@ -1,6 +1,6 @@
 import LeaveAPI from "../../../services/api/leaveapi/LeaveAPI";
 import {LeaveUI} from "./LeaveUI";
-import {Callback} from "../../../services/api/AxiosClient";
+import {Callback} from "../../../services/Callback";
 
 export default class LeaveRepo {
     public constructor(private api: LeaveAPI) {
