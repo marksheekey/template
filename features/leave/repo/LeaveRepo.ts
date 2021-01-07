@@ -2,6 +2,7 @@ import {LeaveUI} from "./LeaveUI";
 import {Callback} from "../../../services/Callback";
 import {Leave} from "../../../services/api/classes/Leave";
 import {IClockService} from "../../../services/clock/IClockService";
+import {ILeave} from "../ILeave";
 
 export default class LeaveRepo {
     public constructor(private api: ILeave, private clock: IClockService) {
@@ -34,9 +35,4 @@ function createLeaveUI(leave: Leave, clock: IClockService): LeaveUI {
         start: clock.apiDateToPrettyDate(leave.start_date),
         end: leave.end_date
     }
-}
-
-
-export interface ILeave {
-    getLeave(startDate: string, endDate: string): Promise<Leave[]>
 }

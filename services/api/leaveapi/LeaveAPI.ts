@@ -1,6 +1,6 @@
 import {Leave} from "../../../services/api/classes/Leave"
 import AxiosClient from "../AxiosClient";
-import {ILeave} from "../../../features/leave/repo/LeaveRepo";
+import {ILeave} from "../../../features/leave/ILeave";
 
 export default class LeaveAPI extends AxiosClient implements ILeave{
     public getLeave(startDate:string, endDate:string): Promise<Leave[]>{
