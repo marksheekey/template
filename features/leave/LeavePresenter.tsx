@@ -4,9 +4,10 @@ import {LeaveUI} from "./repo/LeaveUI";
 import LeaveAPI from "../../services/api/leaveapi/LeaveAPI";
 import {Callback} from "../../services/Callback";
 import {LeaveView} from "./LeaveView";
+import JodaClockService from "../../services/clock/JodaClockService";
 
 export const LeavePresenter: React.FunctionComponent = () => {
-    const leaveRepo = new LeaveRepo(new LeaveAPI())
+    const leaveRepo = new LeaveRepo(new LeaveAPI(), new JodaClockService())
     const [leave, setLeave] = useState([] as LeaveUI[])
     useEffect(() => {
         leaveRepo.fetchLeave("2020-01-01","2020-01-31",new class implements Callback {
