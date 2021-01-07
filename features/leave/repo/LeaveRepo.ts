@@ -10,7 +10,10 @@ export default class LeaveRepo {
         this.clock = clock
     }
 
-    public async fetchLeave(startDate: string, endDate: string, callback: Callback) {
+    public async fetchLeaveForMonth(startDate: string, callback: Callback) {
+        const endDate = this.clock.finalAPIDateOfMonth(startDate)
+        console.log("start:",startDate)
+        console.log("end:",endDate)
         callback.onLoading(true)
         await this.api.getLeave(startDate, endDate).catch((error) => {
             callback.onError(error)
