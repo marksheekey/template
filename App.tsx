@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import {LeavePresenter} from "./features/leave/LeavePresenter";
+import { StyleSheet, View } from 'react-native';
+import {MonthLeaveView} from "./features/leave/MonthLeaveView";
 
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <LeavePresenter />
+      <MonthLeaveView />
       <StatusBar style="auto" />
     </View>
   );

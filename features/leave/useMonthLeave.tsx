@@ -1,29 +1,30 @@
-import React, {useEffect, useState} from "react";
+import JodaClockService from "../../services/clock/JodaClockService";
 import LeaveRepo from "./repo/LeaveRepo";
+import LeaveAPI from "../../services/api/leaveapi/LeaveAPI";
+import {useEffect, useState} from "react";
 import {LeaveUI} from "./repo/LeaveUI";
 import {Callback} from "../../services/Callback";
-import {LeaveView} from "./LeaveView";
-import JodaClockService from "../../services/clock/JodaClockService";
-import LeaveAPI from "../../services/api/leaveapi/LeaveAPI";
 
-export const LeavePresenter: React.FunctionComponent = () => {
+export const useMonthLeave = () => {
     const clockService = new JodaClockService()
     const leaveRepo = new LeaveRepo(new LeaveAPI(), clockService)
     const [leave, setLeave] = useState([] as LeaveUI[])
     const [startDate, setStartDate] = useState("2020-01-01")
     useEffect(() => {
-        leaveRepo.fetchLeaveForMonth(startDate,new class implements Callback {
-            onLoading(loading: Boolean){
+        leaveRepo.fetchLeaveForMonth(startDate, new class implements Callback {
+            onLoading(loading: boolean) {
                 // maybe use app context to show / hide a loader
                 // or do something within this component
-                console.log("loading",loading)
+                console.log("loading", loading)
             }
-            onError(message: string){
+
+            onError(message: string) {
                 // maybe use app context to show / hide an error message
                 // or do something within this component
-                console.log("error",message)
+                console.log("error", message)
             }
-            onResult(data: LeaveUI[]){
+
+            onResult(data: LeaveUI[]) {
                 //pass this data to the view
                 setLeave(data)
             }
@@ -38,7 +39,5 @@ export const LeavePresenter: React.FunctionComponent = () => {
         setStartDate(clockService.subMonthFromAPIDate(startDate))
     }
 
-    return (
-       <LeaveView leave={leave} nextPress={nextMonth} prevPress={previousMonth}/>
-    )
+    return { leave, nextMonth, previousMonth}
 }
