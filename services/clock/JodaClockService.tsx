@@ -5,12 +5,8 @@ const full_date = { weekday: 'long', year: 'numeric', month: 'long', day: 'numer
 
 export default class JodaClockService implements IClockService{
     apiDateToMillis(date: string): number {
-        console.log("date:",date)
         let jDate = LocalDate.parse(date)
         let hDate = new Date(jDate.year(),jDate.month().ordinal(),jDate.dayOfMonth())
-        console.log("jdate:",jDate)
-        console.log("hDate",hDate)
-        console.log("millis",hDate.getTime())
         return hDate.getTime() / 1000
     }
     finalAPIDateOfMonth(date: string): string {
