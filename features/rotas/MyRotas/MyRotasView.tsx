@@ -5,7 +5,7 @@ import {useMyRotas} from "./useMyRotas";
 
 export const MyRotasView: React.FunctionComponent = () => {
 
-    const {rotas, nextMonth, previousMonth, errorMessage, loading} = useMyRotas()
+    const {rotas, nextMonth, previousMonth, error, loading} = useMyRotas()
 
     const renderItem = (item: MyRotasUI) => (
         <View style={styles.item}>
@@ -16,6 +16,9 @@ export const MyRotasView: React.FunctionComponent = () => {
 
     return (
         <View style={styles.container}>
+            {error.length > 0 &&
+            <Text>{error}</Text>
+            }
             {loading &&
             <Text>Loading...</Text>
             }

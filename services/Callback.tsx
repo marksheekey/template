@@ -1,5 +1,5 @@
 export interface Callback{
     onResult: (data: any) => void
-    onError: (message:string) => void
+    onError: (error: Error) => void
     onLoading: (loading: boolean) => void
 }

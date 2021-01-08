@@ -12,38 +12,38 @@ export default class RotaRepo {
     }
 
     public async fetchMyRotas(startDate: string, callback: Callback) {
-        const endDate = this.clock.finalAPIDateOfMonth(startDate)
         callback.onLoading(true)
-        await this.api.getLeave(startDate, endDate).catch((error) => {
-            callback.onError(error)
-        }).then((leave) => {
+        const endDate = this.clock.finalAPIDateOfMonth(startDate)
+        try {
+            let leave = await this.api.getLeave(startDate, endDate)
+            let shifts: ShiftStartTime[]
+            if (leave) {
                 let milliStart = this.clock.apiDateToMillis(startDate)
                 let milliEnd = this.clock.apiDateToMillis(endDate)
-                console.log("milliStart",milliStart)
-                console.log("milliEnd",milliEnd)
-                this.api.getShiftStartTimes(milliStart, milliEnd).catch((error) =>{
-                    callback.onError(error)
-                } ).finally(() => {
-                    callback.onLoading(false)
-                }).then((shifts) => {
-                    let data = createMyRotasUI(leave, shifts)
-                    callback.onResult(data)
-                })
+                shifts = await this.api.getShiftStartTimes(milliStart, milliEnd)
+                if(shifts) {
+                    callback.onResult(createMyRotasUI(leave, shifts))
+                }else{
+                    callback.onResult([])
+                }
             }
-        ).finally(() => {
+        } catch (error) {
+            if(error instanceof Error){
+                callback.onError(error)
+            }
+        } finally {
             callback.onLoading(false)
-        })
+        }
     }
-
 
 }
 
-function createMyRotasUI(leave: Leave[] | void, shifts: ShiftStartTime[]| void): MyRotasUI[] {
+function createMyRotasUI(leave: Leave[] , shifts: ShiftStartTime[]): MyRotasUI[] {
     let data: MyRotasUI[] = []
-    if(leave){
-        for(let oneLeave of leave){
+    if (leave) {
+        for (let oneLeave of leave) {
             let ui: MyRotasUI = {
-                key: "key"+oneLeave.id,
+                key: "key" + oneLeave.id,
                 item: "Leave",
                 start: oneLeave.start_date,
                 end: oneLeave.end_date
@@ -52,10 +52,10 @@ function createMyRotasUI(leave: Leave[] | void, shifts: ShiftStartTime[]| void):
         }
     }
 
-    if(shifts){
-        for(let oneShift of shifts){
+    if (shifts) {
+        for (let oneShift of shifts) {
             let ui: MyRotasUI = {
-                key: "key"+oneShift.id.toString(),
+                key: "key" + oneShift.id.toString(),
                 item: "Shift",
                 start: oneShift.start_time.toString(),
                 end: oneShift.end_time.toString()

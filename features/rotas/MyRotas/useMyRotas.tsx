@@ -10,23 +10,19 @@ export const useMyRotas = () => {
     const rotasRepo = new RotaRepo(new RotasAPI(), clockService)
     const [rotas, setRotas] = useState([] as MyRotasUI[])
     const [startDate, setStartDate] = useState("2020-01-01")
-    const [errorMessage, setErrorMessage] = useState("")
+    const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         rotasRepo.fetchMyRotas(startDate, new class implements Callback {
             onLoading(loadingCallback: boolean) {
                 setLoading(loadingCallback)
-                console.log("loading", loadingCallback)
             }
-
-            onError(message: string) {
-                console.log("error", message)
-                setErrorMessage(message)
+            onError(err: Error) {
+                console.log(err.message)
+                setError(err.message)
             }
-
             onResult(data: MyRotasUI[]) {
-                //pass this data to the view
                 setRotas(data)
             }
         })
@@ -40,5 +36,5 @@ export const useMyRotas = () => {
         setStartDate(clockService.subMonthFromAPIDate(startDate))
     }
 
-    return { rotas, nextMonth, previousMonth, errorMessage, loading}
+    return { rotas, nextMonth, previousMonth, error, loading}
 }
