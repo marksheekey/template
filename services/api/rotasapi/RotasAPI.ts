@@ -9,6 +9,6 @@ export default class RotasAPI extends AxiosClient implements IRotas{
     }
 
     public getShiftStartTimes(startDate:number, endDate:number): Promise<ShiftStartTime[]>{
-        return this.instance.get<ShiftStartTime[],ShiftStartTime[]>('shiftsa', {params: {start: startDate, end: endDate}})
+        return this.instance.get<ShiftStartTime[],ShiftStartTime[]>('shifts', {params: {start: startDate, end: endDate}})
     }
 }

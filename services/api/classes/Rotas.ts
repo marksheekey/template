@@ -1,4 +1,3 @@
-
 export type Rotas = {
     id: string
     start_date: string

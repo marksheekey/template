@@ -4,6 +4,7 @@ import {IRotas} from "../IRotas";
 import {Leave} from "../../../services/api/classes/Leave";
 import {ShiftStartTime} from "../../../services/api/classes/ShiftStartTime";
 import {MyRotasUI} from "../MyRotas/MyRotasUI";
+import {AxiosError} from "axios";
 
 export default class RotaRepo {
     public constructor(private api: IRotas, private clock: IClockService) {
@@ -28,9 +29,13 @@ export default class RotaRepo {
                 }
             }
         } catch (error) {
-            if(error instanceof Error){
-                callback.onError(error)
+            if (error && error.response) {
+                console.log("error1")
+                const axiosError = error as AxiosError<any>
+                callback.onError(axiosError)
             }
+            console.log("error2")
+            throw error;
         } finally {
             callback.onLoading(false)
         }
