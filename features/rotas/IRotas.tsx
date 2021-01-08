@@ -1,5 +1,8 @@
-import {Rotas} from "../../services/api/classes/Rotas";
+
+import {Leave} from "../../services/api/classes/Leave";
+import {ShiftStartTime} from "../../services/api/classes/ShiftStartTime";
 
 export interface IRotas {
-    getRotas(startDate: string, endDate: string): Promise<Rotas[]>
+    getLeave(startDate: string, endDate: string): Promise<Leave[]>
+    getShiftStartTimes(startDate: number, endDate: number): Promise<ShiftStartTime[]>
 }

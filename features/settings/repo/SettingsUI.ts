@@ -1,5 +1,5 @@
 
-export type RotasUI = {
+export type SettingsUI = {
     //millis: number
     key: string
     start: string

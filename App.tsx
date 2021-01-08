@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import {MonthLeaveView} from "./features/leave/MonthLeaveView";
+import {MyRotasView} from "./features/rotas/MyRotas/MyRotasView";
 
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <MonthLeaveView />
+      <MyRotasView />
       <StatusBar style="auto" />
     </View>
   );
