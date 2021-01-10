@@ -13,19 +13,14 @@ export const useMyRotas = () => {
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
 
+    let callback: Callback = {
+        onError(errorCallback: Error): void {setError(errorCallback.message)},
+        onLoading(loadingCallback: boolean): void { setLoading(loadingCallback)},
+        onResult(data: any): void { setRotas(data)}
+    }
+
     useEffect(() => {
-        rotasRepo.fetchMyRotas(startDate, new class implements Callback {
-            onLoading(loadingCallback: boolean) {
-                setLoading(loadingCallback)
-            }
-            onError(err: Error) {
-                console.log(err.message)
-                setError(err.message)
-            }
-            onResult(data: MyRotasUI[]) {
-                setRotas(data)
-            }
-        })
+        rotasRepo.fetchMyRotas(startDate, callback)
     }, [startDate])
 
     const nextMonth = () => {
