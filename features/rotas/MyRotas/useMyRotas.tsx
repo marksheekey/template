@@ -14,7 +14,7 @@ export const useMyRotas = () => {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-          rotasRepo.fetchMyRotas(startDate, setCallBack(setError, setLoading, setRotas))
+          rotasRepo.fetchMyRotas(startDate, setCallBack(setError, setLoading, setRotas)).then()
     }, [startDate])
 
     const nextMonth = () => {
