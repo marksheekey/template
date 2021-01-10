@@ -1,7 +1,6 @@
 import axios, {AxiosInstance, AxiosResponse} from 'axios'
 import {apiConfig} from './config'
 import {LocalStorage} from '../local-storage/LocalStorage'
-import {toBase64} from "js-base64";
 
 class AxiosClient {
     public readonly instance: AxiosInstance;
