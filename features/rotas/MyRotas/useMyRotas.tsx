@@ -4,6 +4,7 @@ import {Callback} from "../../../services/Callback";
 import RotasAPI from "../../../services/api/rotasapi/RotasAPI";
 import {MyRotasUI} from "./MyRotasUI";
 import RotaRepo from "../repo/RotaRepo";
+import {setCallBack} from "../../../services/setCallBack";
 
 export const useMyRotas = () => {
     const clockService = new JodaClockService()
@@ -13,14 +14,8 @@ export const useMyRotas = () => {
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
 
-    let callback: Callback = {
-        onError(errorCallback: Error): void {setError(errorCallback.message)},
-        onLoading(loadingCallback: boolean): void { setLoading(loadingCallback)},
-        onResult(data: any): void { setRotas(data)}
-    }
-
     useEffect(() => {
-        rotasRepo.fetchMyRotas(startDate, callback)
+        rotasRepo.fetchMyRotas(startDate, setCallBack(setError, setLoading, setRotas))
     }, [startDate])
 
     const nextMonth = () => {
