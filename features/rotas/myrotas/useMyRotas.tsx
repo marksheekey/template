@@ -7,7 +7,7 @@ import {setCallBack} from "../../../services/setCallBack";
 import {useError} from "../../../global/GlobalContext";
 
 export const useMyRotas = () => {
-    const clockService = new JodaClockService()
+    const clockService = JodaClockService.getInstance()
     const rotasRepo = new RotaRepo(new RotasAPI(), clockService)
     const [rotas, setRotas] = useState([] as MyRotasUI[])
     const [startDate, setStartDate] = useState("2020-01-01")

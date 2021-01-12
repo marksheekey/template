@@ -4,6 +4,16 @@ import {LocalDate} from "@js-joda/core";
 const full_date = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 export default class JodaClockService implements IClockService{
+    private static instance: JodaClockService;
+    private constructor() {}
+    static getInstance(): JodaClockService {
+        if (!JodaClockService.instance) {
+            JodaClockService.instance = new JodaClockService();
+        }
+
+        return JodaClockService.instance;
+    }
+
     apiDateToMillis(date: string): number {
         let jDate = LocalDate.parse(date)
         let hDate = new Date(jDate.year(),jDate.month().ordinal(),jDate.dayOfMonth())

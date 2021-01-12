@@ -3,11 +3,21 @@ import {Callback} from "../../../services/Callback";
 import {Leave} from "../../../services/api/classes/Leave";
 import {IClockService} from "../../../services/clock/IClockService";
 import {ILeave} from "../ILeave";
+import LeaveAPI from "../../../services/api/leaveapi/LeaveAPI";
 
 export default class LeaveRepo {
+    private static instance: LeaveRepo;
     public constructor(private api: ILeave, private clock: IClockService) {
         this.api = api
         this.clock = clock
+    }
+
+    static getInstance(api: ILeave, clock: IClockService): LeaveRepo {
+        if (!LeaveRepo.instance) {
+            LeaveRepo.instance = new LeaveRepo(api,clock)
+        }
+
+        return LeaveRepo.instance
     }
 
     public async fetchLeaveForMonth(startDate: string, callback: Callback) {

@@ -3,12 +3,11 @@ import LeaveRepo from "./repo/LeaveRepo";
 import LeaveAPI from "../../services/api/leaveapi/LeaveAPI";
 import {useEffect, useState} from "react";
 import {LeaveUI} from "./repo/LeaveUI";
-import {Callback} from "../../services/Callback";
 import {setCallBack} from "../../services/setCallBack";
 
 export const useMonthLeave = () => {
-    const clockService = new JodaClockService()
-    const leaveRepo = new LeaveRepo(new LeaveAPI(), clockService)
+    const clockService = JodaClockService.getInstance()
+    const leaveRepo = LeaveRepo.getInstance(LeaveAPI.getInstance(), clockService)
     const [leave, setLeave] = useState([] as LeaveUI[])
     const [startDate, setStartDate] = useState("2020-01-01")
     const [error, setError] = useState("")
