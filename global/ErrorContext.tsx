@@ -2,22 +2,18 @@ import React, {useState, useCallback, ReactNode, useContext, ReactChildren, Func
 
 export const ErrorContext = React.createContext({
     error: "",
-    addError: (message:string) => {},
+    addError: (error: string) => {},
     removeError: () => {}
 });
-
-export type Props = {
-    children: ReactNode
-};
 
 export const ErrorProvider: FunctionComponent = ({children}) => {
     const [error, setError] = useState("");
     const removeError = () => setError("");
-    const addError = (message: string) => setError(message);
+    const addError = (error: string) => setError(error);
 
     const contextValue = {
         error: error,
-        addError: useCallback((message: string) => addError(message), []),
+        addError: useCallback((error: string) => addError(error), []),
         removeError: useCallback(() => removeError(), [])
     };
 

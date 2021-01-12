@@ -5,4 +5,5 @@ export interface IClockService {
     subMonthFromAPIDate(date: string): string
     finalAPIDateOfMonth(date: string): string
     apiDateToMillis(date: string): number
+    now(): number
 }

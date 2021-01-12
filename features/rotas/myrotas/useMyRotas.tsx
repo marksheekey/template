@@ -4,7 +4,7 @@ import RotasAPI from "../../../services/api/rotasapi/RotasAPI";
 import {MyRotasUI} from "./MyRotasUI";
 import RotaRepo from "../repo/RotaRepo";
 import {setCallBack} from "../../../services/setCallBack";
-import {useError} from "../../../global/GlobalContext";
+import {useError} from "../../../global/ErrorContext";
 
 export const useMyRotas = () => {
     const clockService = JodaClockService.getInstance()

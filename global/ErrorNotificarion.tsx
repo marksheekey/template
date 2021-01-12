@@ -1,4 +1,4 @@
-import {ErrorProvider, useError} from "./GlobalContext";
+import {ErrorProvider, useError} from "./ErrorContext";
 import {StyleSheet, Text, View} from "react-native";
 import React from "react";
 

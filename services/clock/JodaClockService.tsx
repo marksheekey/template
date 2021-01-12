@@ -1,5 +1,5 @@
 import {IClockService} from "./IClockService";
-import {LocalDate} from "@js-joda/core";
+import {LocalDate, LocalDateTime, LocalTime} from "@js-joda/core";
 
 const full_date = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -51,6 +51,10 @@ export default class JodaClockService implements IClockService{
             day = "0"+day
         }
         return date.year()+"-"+month+"-"+day;
+    }
+
+    now(): number {
+        return Date.now()
     }
 
 }

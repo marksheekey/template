@@ -15,7 +15,6 @@ export default class RotaRepo {
     public async fetchMyRotas(startDate: string, callback: Callback) {
         callback.onLoading(true)
         const endDate = this.clock.finalAPIDateOfMonth(startDate)
-        //const endDate = "wibble"
         try {
             let leave = await this.api.getLeave(startDate, endDate)
             let shifts: ShiftStartTime[]
@@ -36,7 +35,7 @@ export default class RotaRepo {
                 callback.onError(axiosError)
             }
             const err: Error = new Error()
-            err.message = "An error whne fetching Rotas"
+            err.message = "An error when fetching Rotas"
             callback.onError(error)
             console.log("error2")
         } finally {
