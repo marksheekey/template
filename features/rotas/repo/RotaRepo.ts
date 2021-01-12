@@ -30,14 +30,10 @@ export default class RotaRepo {
             }
         } catch (error) {
             if (error && error.response) {
-                console.log("error1")
                 const axiosError = error as AxiosError<any>
-                callback.onError(axiosError)
+                callback.onError(axiosError.message)
             }
-            const err: Error = new Error()
-            err.message = "An error when fetching Rotas"
-            callback.onError(error)
-            console.log("error2")
+            callback.onError("An error when fetching Rotas")
         } finally {
             callback.onLoading(false)
         }

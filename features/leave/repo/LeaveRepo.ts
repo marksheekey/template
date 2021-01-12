@@ -3,7 +3,6 @@ import {Callback} from "../../../services/Callback";
 import {Leave} from "../../../services/api/classes/Leave";
 import {IClockService} from "../../../services/clock/IClockService";
 import {ILeave} from "../ILeave";
-import LeaveAPI from "../../../services/api/leaveapi/LeaveAPI";
 
 export default class LeaveRepo {
     private static instance: LeaveRepo;
@@ -22,8 +21,6 @@ export default class LeaveRepo {
 
     public async fetchLeaveForMonth(startDate: string, callback: Callback) {
         const endDate = this.clock.finalAPIDateOfMonth(startDate)
-        console.log("start:",startDate)
-        console.log("end:",endDate)
         callback.onLoading(true)
         await this.api.getLeave(startDate, endDate).catch((error) => {
             callback.onError(error)
