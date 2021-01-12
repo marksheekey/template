@@ -4,7 +4,6 @@ import {MyRotasUI} from "./MyRotasUI";
 import {useMyRotas} from "./useMyRotas";
 
 export const MyRotasView: React.FunctionComponent = () => {
-
     const {rotas, nextMonth, previousMonth, error, loading} = useMyRotas()
 
     const renderItem = (item: MyRotasUI) => (
@@ -16,12 +15,6 @@ export const MyRotasView: React.FunctionComponent = () => {
 
     return (
         <View style={styles.container}>
-            {error.length > 0 &&
-            <Text>{error}</Text>
-            }
-            {loading &&
-            <Text>Loading...</Text>
-            }
             {rotas.length === 0 &&
             <Text>No Rotas</Text>
             }
@@ -29,8 +22,8 @@ export const MyRotasView: React.FunctionComponent = () => {
                       keyExtractor={(item) => item.key}
                       renderItem={({item}) => (renderItem(item))}>
             </FlatList>
-            <Button title={"Previous"} onPress={nextMonth}/>
-            <Button title={"Next"} onPress={previousMonth}/>
+            <Button title={"Next"} onPress={nextMonth}/>
+            <Button title={"Previous"} onPress={previousMonth}/>
         </View>
     );
 }

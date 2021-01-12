@@ -4,32 +4,21 @@ import LeaveAPI from "../../services/api/leaveapi/LeaveAPI";
 import {useEffect, useState} from "react";
 import {LeaveUI} from "./repo/LeaveUI";
 import {Callback} from "../../services/Callback";
+import {setCallBack} from "../../services/setCallBack";
 
 export const useMonthLeave = () => {
     const clockService = new JodaClockService()
     const leaveRepo = new LeaveRepo(new LeaveAPI(), clockService)
     const [leave, setLeave] = useState([] as LeaveUI[])
     const [startDate, setStartDate] = useState("2020-01-01")
+    const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
+
+
     useEffect(() => {
-        leaveRepo.fetchLeaveForMonth(startDate, new class implements Callback {
-            onLoading(loading: boolean) {
-                // maybe use app context to show / hide a loader
-                // or do something within this component
-                console.log("loading", loading)
-            }
-
-            onError(message: string) {
-                // maybe use app context to show / hide an error message
-                // or do something within this component
-                console.log("error", message)
-            }
-
-            onResult(data: LeaveUI[]) {
-                //pass this data to the view
-                setLeave(data)
-            }
-        })
+        leaveRepo.fetchLeaveForMonth(startDate, setCallBack(setError, setLoading, setLeave)).then()
     }, [startDate])
+
 
     const nextMonth = () => {
         setStartDate(clockService.addMonthToAPIDate(startDate))
@@ -39,5 +28,5 @@ export const useMonthLeave = () => {
         setStartDate(clockService.subMonthFromAPIDate(startDate))
     }
 
-    return { leave, nextMonth, previousMonth}
+    return { leave, nextMonth, previousMonth, error, loading}
 }

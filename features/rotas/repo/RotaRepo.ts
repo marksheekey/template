@@ -3,7 +3,7 @@ import {IClockService} from "../../../services/clock/IClockService";
 import {IRotas} from "../IRotas";
 import {Leave} from "../../../services/api/classes/Leave";
 import {ShiftStartTime} from "../../../services/api/classes/ShiftStartTime";
-import {MyRotasUI} from "../MyRotas/MyRotasUI";
+import {MyRotasUI} from "../myrotas/MyRotasUI";
 import {AxiosError} from "axios";
 
 export default class RotaRepo {
