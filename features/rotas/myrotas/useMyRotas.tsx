@@ -11,12 +11,11 @@ export const useMyRotas = () => {
     const rotasRepo = new RotaRepo(new RotasAPI(), clockService)
     const [rotas, setRotas] = useState([] as MyRotasUI[])
     const [startDate, setStartDate] = useState("2020-01-01")
-    const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const { addError } = useError();
 
     useEffect(() => {
-          rotasRepo.fetchMyRotas(startDate, setCallBack(setError, setLoading, setRotas)).then()
+          rotasRepo.fetchMyRotas(startDate, setCallBack(addError, setLoading, setRotas)).then()
     }, [startDate])
 
     const nextMonth = () => {
@@ -29,7 +28,7 @@ export const useMyRotas = () => {
         addError("prev")
     }
 
-    return { rotas, nextMonth, previousMonth, error, loading}
+    return { rotas, nextMonth, previousMonth, loading}
 }
 // just to demo a test
 export function sum(a: number, b: number) {
