@@ -1,4 +1,4 @@
-import React, {useState, useCallback, ReactNode, useContext, ReactChildren, FunctionComponent} from 'react';
+import React, {useState, useCallback, useContext, FunctionComponent} from 'react';
 import {RotaSettings} from "../services/api/classes/RotaSettings";
 import JodaClockService from "../services/clock/JodaClockService";
 
@@ -26,7 +26,7 @@ export const SettingsProvider: FunctionComponent = ({children}) => {
         addSettings: useCallback((rotaSettings: RotaSettings) => {
             let now = JodaClockService.getInstance().now()
             setSettings(rotaSettings)
-            setExpiry!(now + 10000)
+            setExpiry(now + 10000)
         }, []),
         addExpiry: useCallback((rotaExpiry: number) => setExpiry(rotaExpiry), []),
     };
