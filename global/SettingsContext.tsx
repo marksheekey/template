@@ -1,5 +1,6 @@
 import React, {useState, useCallback, ReactNode, useContext, ReactChildren, FunctionComponent} from 'react';
 import {RotaSettings} from "../services/api/classes/RotaSettings";
+import JodaClockService from "../services/clock/JodaClockService";
 
 type SettingsContextType = {
     settings: RotaSettings,
@@ -22,7 +23,11 @@ export const SettingsProvider: FunctionComponent = ({children}) => {
     const contextValue: SettingsContextType = {
         settings: settings,
         expiry: expiry,
-        addSettings: useCallback((rotaSettings: RotaSettings) => setSettings(rotaSettings), []),
+        addSettings: useCallback((rotaSettings: RotaSettings) => {
+            let now = JodaClockService.getInstance().now()
+            setSettings(rotaSettings)
+            setExpiry!(now + 10000)
+        }, []),
         addExpiry: useCallback((rotaExpiry: number) => setExpiry(rotaExpiry), []),
     };
 
@@ -34,6 +39,6 @@ export const SettingsProvider: FunctionComponent = ({children}) => {
 }
 
 export function useSettings() {
-    const { settings, addSettings, expiry, addExpiry } = useContext(SettingsContext);
-    return { settings, addSettings, expiry, addExpiry };
+    const { settings, addSettings, expiry } = useContext(SettingsContext);
+    return { settings, addSettings, expiry };
 }

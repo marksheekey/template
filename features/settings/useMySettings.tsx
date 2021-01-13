@@ -10,7 +10,7 @@ export const useMySettings = () => {
     const settingsRepo = SettingsRepo.getInstance(SettingsAPI.getInstance(), JodaClockService.getInstance())
     const [refresher, setRefresher] = useState(false)
     const [loading, setLoading] = useState(false)
-    const {settings, addSettings, expiry, addExpiry} = useSettings()
+    const {settings, addSettings, expiry} = useSettings()
     const { addError } = useError();
 
     const refresh = () => {
@@ -24,7 +24,6 @@ export const useMySettings = () => {
             addError("Cached settings")
         }else {
             addError("Fetch Settings")
-            addExpiry!(now + 10000)
             settingsRepo.fetchMySettings(setCallBack(addError, setLoading, addSettings!))
         }
     }, [refresher])
