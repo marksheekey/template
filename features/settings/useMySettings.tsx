@@ -21,7 +21,9 @@ export const useMySettings = () => {
         let now = JodaClockService.getInstance().now()
         if(expiry && settings && expiry > now){
             addSettings!(settings)
+            addError("Cached settings")
         }else {
+            addError("Fetch Settings")
             addExpiry!(now + 10000)
             settingsRepo.fetchMySettings(setCallBack(addError, setLoading, addSettings!))
         }

@@ -20,12 +20,12 @@ export const useMyRotas = () => {
 
     const nextMonth = () => {
         setStartDate(clockService.addMonthToAPIDate(startDate))
-        addError("next")
+        addError("My Rotas:next")
     }
 
     const previousMonth = () => {
         setStartDate(clockService.subMonthFromAPIDate(startDate))
-        addError("prev")
+        addError("MyRotas: prev")
     }
 
     return { rotas, nextMonth, previousMonth, loading}

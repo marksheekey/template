@@ -1,10 +1,12 @@
 import {StatusBar} from 'expo-status-bar';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {ErrorProvider} from "./global/ErrorContext";
 import {ErrorNotification} from "./global/ErrorNotificarion";
 import {SettingsView} from "./features/settings/SettingsView";
 import {SettingsProvider} from "./global/SettingsContext";
+import {MonthLeaveView} from "./features/leave/MonthLeaveView";
+import {MyRotasView} from "./features/rotas/myrotas/MyRotasView";
 
 
 export default function App() {
@@ -13,8 +15,10 @@ export default function App() {
         <ErrorProvider >
         <SettingsProvider >
         <View style={styles.container}>
-            <ErrorNotification > </ErrorNotification>
+            <ErrorNotification />
             <SettingsView/>
+            <MonthLeaveView />
+            <MyRotasView />
             <StatusBar style="auto"/>
         </View>
         </SettingsProvider>
@@ -24,9 +28,8 @@ export default function App() {
 
 const styles = StyleSheet.create({
     container: {
+        marginTop:50,
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
 });

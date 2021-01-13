@@ -24,15 +24,12 @@ export const SettingsView: React.FunctionComponent = () => {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 50,
-        marginBottom: 50,
         backgroundColor: '#fff',
-        justifyContent: 'center',
+        alignItems:"center"
     },
     item: {
         flexDirection: 'row',
         backgroundColor: '#fff',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
+        alignItems:"center"
     },
 });

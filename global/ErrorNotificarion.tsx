@@ -1,9 +1,9 @@
-import {ErrorProvider, useError} from "./ErrorContext";
+import {useError} from "./ErrorContext";
 import {StyleSheet, Text, View} from "react-native";
 import React from "react";
 
 export const ErrorNotification: React.FunctionComponent = () => {
-    const { error, removeError } = useError();
+    const { error} = useError();
     console.log("error:",error)
     return (
         <View style={styles.container}>
@@ -14,9 +14,7 @@ export const ErrorNotification: React.FunctionComponent = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
+        alignItems:"center"
     },
 });
