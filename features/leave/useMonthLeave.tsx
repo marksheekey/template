@@ -12,11 +12,11 @@ export const useMonthLeave = () => {
     const leaveRepo = LeaveRepo.getInstance(LeaveAPI.getInstance(), clockService)
     const [leave, setLeave] = useState([] as LeaveUI[])
     const [startDate, setStartDate] = useState("2020-01-01")
-    const {isLoading} = useLoading()
+    const {setIsLoading} = useLoading()
     const { addError } = useError();
 
     useEffect(() => {
-        leaveRepo.fetchLeaveForMonth(startDate, setCallBack(addError, isLoading, setLeave)).then()
+        leaveRepo.fetchLeaveForMonth(startDate, setCallBack(addError, setIsLoading, setLeave)).then()
     }, [startDate])
 
 

@@ -1,17 +1,17 @@
-import React, {useState, useCallback, useContext,  FunctionComponent} from 'react';
+import React, {useState, useContext,  FunctionComponent} from 'react';
 
 export const LoadingContext = React.createContext({
-    loading: false,
-    isLoading: (loading: boolean) => {},
+    isLoading: false,
+    setIsLoading: (loading: boolean) => {},
 });
 
 export const LoadingProvider: FunctionComponent = ({children}) => {
     const [loading, setLoading] = useState(false);
-    const isLoading = (loading: boolean) => setLoading(loading);
+    const setIsLoading = (load: boolean) => setLoading(load);
 
     const contextValue = {
-        loading: loading,
-        isLoading: useCallback((loading: boolean) => isLoading(loading), []),
+        isLoading: loading,
+        setIsLoading: (load: boolean) => setIsLoading(load)
     };
 
     return (
@@ -22,6 +22,6 @@ export const LoadingProvider: FunctionComponent = ({children}) => {
 }
 
 export function useLoading() {
-    const { loading, isLoading } = useContext(LoadingContext);
-    return { loading, isLoading};
+    const { isLoading, setIsLoading } = useContext(LoadingContext);
+    return {isLoading, setIsLoading}
 }

@@ -26,7 +26,7 @@ export const SettingsProvider: FunctionComponent = ({children}) => {
     const [settings, setSettings] = useState({} as RotaSettings)
     const [expiry, setExpiry] = useState(0)
     const [refresher, setRefresher] = useState(false)
-    const {isLoading} = useLoading()
+    const {setIsLoading} = useLoading()
     const {addError} = useError()
     const clock = JodaClockService.getInstance()
     const settingsRepo = SettingsRepo.getInstance(SettingsAPI.getInstance(), clock)
@@ -41,10 +41,15 @@ export const SettingsProvider: FunctionComponent = ({children}) => {
         let now = clock.now()
         if(expiry && settings && expiry > now){
             addError("Cached settings")
+            setIsLoading(false)
         }else {
             addError("Fetch Settings")
             setExpiry(now+10000)
-            settingsRepo.fetchMySettings(setCallBack(error, isLoading, setSettings))
+            // artificial delay for demo porpoises
+            setIsLoading(true)
+            setTimeout(function() {
+                settingsRepo.fetchMySettings(setCallBack(error, setIsLoading, setSettings))
+            }, 2000);
         }
     }, [refresher])
 

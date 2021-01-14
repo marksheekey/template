@@ -12,11 +12,11 @@ export const useMyRotas = () => {
     const rotasRepo = new RotaRepo(new RotasAPI(), clockService)
     const [rotas, setRotas] = useState([] as MyRotasUI[])
     const [startDate, setStartDate] = useState("2020-01-01")
-    const {isLoading} = useLoading()
+    const {setIsLoading} = useLoading()
     const { addError } = useError();
 
     useEffect(() => {
-          rotasRepo.fetchMyRotas(startDate, setCallBack(addError, isLoading, setRotas)).then()
+          rotasRepo.fetchMyRotas(startDate, setCallBack(addError, setIsLoading, setRotas)).then()
     }, [startDate])
 
     const nextMonth = () => {
