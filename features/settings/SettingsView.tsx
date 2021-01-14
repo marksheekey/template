@@ -1,13 +1,10 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Button, StyleSheet, Text, View} from "react-native";
-import {useMySettings} from "./useMySettings";
+import {useSettings} from "../../global/SettingsContext";
 
 export const SettingsView: React.FunctionComponent = () => {
-    const {settings, refresh} = useMySettings()
+    const {settings, refresh} = useSettings()
 
-    useEffect(() => {
-        console.log("settings","refresh")
-    }, [settings])
 
     return (
         <View style={styles.container}>

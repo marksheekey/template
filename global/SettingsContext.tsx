@@ -1,24 +1,52 @@
-import React, {useState, useCallback, useContext, FunctionComponent} from 'react';
+import React, {useState, useCallback, useContext, FunctionComponent, useEffect} from 'react';
 import {RotaSettings} from "../services/api/classes/RotaSettings";
 import JodaClockService from "../services/clock/JodaClockService";
+import {setCallBack} from "../services/setCallBack";
+import {useError} from "./ErrorContext";
+import SettingsRepo from "../features/settings/repo/SettingsRepo";
+import SettingsAPI from "../services/api/settingsapi/SettingsAPI";
 
 type SettingsContextType = {
     settings: RotaSettings,
     expiry: number,
     addSettings: (settings: RotaSettings) => void,
     addExpiry: (millis: number) => void
+    refresh: () => void,
 }
 
-export const SettingsContext = React.createContext<Partial<SettingsContextType>>({
+export const SettingsContext = React.createContext<SettingsContextType>({
+        settings: {} as RotaSettings,
         expiry: 0,
         addSettings: (settings: RotaSettings) => {},
-        addExpiry: (millis: number) => {}
+        addExpiry: (millis: number) => {},
+        refresh: () => {}
     }
 );
 
 export const SettingsProvider: FunctionComponent = ({children}) => {
     const [settings, setSettings] = useState({} as RotaSettings)
     const [expiry, setExpiry] = useState(0)
+    const [refresher, setRefresher] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const {addError} = useError()
+    const clock = JodaClockService.getInstance()
+    const settingsRepo = SettingsRepo.getInstance(SettingsAPI.getInstance(), clock)
+
+    const error = (errorString: string) => {
+        addError(errorString)
+        setExpiry(0)
+    }
+
+    useEffect(() => {
+        let now = clock.now()
+        if(expiry && settings && expiry > now){
+            addError("Cached settings")
+        }else {
+            addError("Fetch Settings")
+            setExpiry(now+10000)
+            settingsRepo.fetchMySettings(setCallBack(error, setLoading, setSettings))
+        }
+    }, [refresher])
 
     const contextValue: SettingsContextType = {
         settings: settings,
@@ -29,7 +57,9 @@ export const SettingsProvider: FunctionComponent = ({children}) => {
             setExpiry(now + 10000)
         }, []),
         addExpiry: useCallback((rotaExpiry: number) => setExpiry(rotaExpiry), []),
+        refresh: () => {setRefresher(!refresher)}
     };
+
 
     return (
         <SettingsContext.Provider value={contextValue}>
@@ -39,6 +69,6 @@ export const SettingsProvider: FunctionComponent = ({children}) => {
 }
 
 export function useSettings() {
-    const { settings, addSettings, expiry } = useContext(SettingsContext);
-    return { settings, addSettings, expiry };
+    const { settings, addSettings, refresh } = useContext(SettingsContext);
+    return { settings, addSettings, refresh };
 }

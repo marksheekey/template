@@ -1,16 +1,12 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Button, FlatList, StyleSheet, Text, View} from "react-native";
 import {MyRotasUI} from "./MyRotasUI";
 import {useMyRotas} from "./useMyRotas";
-import {useMySettings} from "../../settings/useMySettings";
+import {useSettings} from "../../../global/SettingsContext";
 
 export const MyRotasView: React.FunctionComponent = () => {
     const {rotas, nextMonth, previousMonth} = useMyRotas()
-    const {settings, refresh} = useMySettings()
-
-    useEffect(() => {
-        refresh()
-    }, [])
+    const {settings} = useSettings()
 
     const renderItem = (item: MyRotasUI) => (
         <View style={styles.item}>
