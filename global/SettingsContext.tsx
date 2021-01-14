@@ -5,6 +5,7 @@ import {setCallBack} from "../services/setCallBack";
 import {useError} from "./ErrorContext";
 import SettingsRepo from "../features/settings/repo/SettingsRepo";
 import SettingsAPI from "../services/api/settingsapi/SettingsAPI";
+import {useLoading} from "./LoadingContext";
 
 type SettingsContextType = {
     settings: RotaSettings,
@@ -25,7 +26,7 @@ export const SettingsProvider: FunctionComponent = ({children}) => {
     const [settings, setSettings] = useState({} as RotaSettings)
     const [expiry, setExpiry] = useState(0)
     const [refresher, setRefresher] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const {isLoading} = useLoading()
     const {addError} = useError()
     const clock = JodaClockService.getInstance()
     const settingsRepo = SettingsRepo.getInstance(SettingsAPI.getInstance(), clock)
@@ -36,13 +37,14 @@ export const SettingsProvider: FunctionComponent = ({children}) => {
     }
 
     useEffect(() => {
+        console.log("refresh")
         let now = clock.now()
         if(expiry && settings && expiry > now){
             addError("Cached settings")
         }else {
             addError("Fetch Settings")
             setExpiry(now+10000)
-            settingsRepo.fetchMySettings(setCallBack(error, setLoading, setSettings))
+            settingsRepo.fetchMySettings(setCallBack(error, isLoading, setSettings))
         }
     }, [refresher])
 

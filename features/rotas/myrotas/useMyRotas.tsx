@@ -5,17 +5,18 @@ import {MyRotasUI} from "./MyRotasUI";
 import RotaRepo from "../repo/RotaRepo";
 import {setCallBack} from "../../../services/setCallBack";
 import {useError} from "../../../global/ErrorContext";
+import {useLoading} from "../../../global/LoadingContext";
 
 export const useMyRotas = () => {
     const clockService = JodaClockService.getInstance()
     const rotasRepo = new RotaRepo(new RotasAPI(), clockService)
     const [rotas, setRotas] = useState([] as MyRotasUI[])
     const [startDate, setStartDate] = useState("2020-01-01")
-    const [loading, setLoading] = useState(false)
+    const {isLoading} = useLoading()
     const { addError } = useError();
 
     useEffect(() => {
-          rotasRepo.fetchMyRotas(startDate, setCallBack(addError, setLoading, setRotas)).then()
+          rotasRepo.fetchMyRotas(startDate, setCallBack(addError, isLoading, setRotas)).then()
     }, [startDate])
 
     const nextMonth = () => {
@@ -28,7 +29,7 @@ export const useMyRotas = () => {
         addError("MyRotas: prev")
     }
 
-    return { rotas, nextMonth, previousMonth, loading}
+    return { rotas, nextMonth, previousMonth}
 }
 // just to demo a test
 export function sum(a: number, b: number) {

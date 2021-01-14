@@ -7,14 +7,22 @@ import {SettingsView} from "./features/settings/SettingsView";
 import {SettingsProvider} from "./global/SettingsContext";
 import {MonthLeaveView} from "./features/leave/MonthLeaveView";
 import {MyRotasView} from "./features/rotas/myrotas/MyRotasView";
+import {LoadingProvider, useLoading} from "./global/LoadingContext";
+import {LoadingNotification} from "./global/LoadingNotificarion";
 
 
 export default function App() {
 
+    const { loading} = useLoading()
+
     return (
+        <LoadingProvider >
         <ErrorProvider >
         <SettingsProvider >
         <View style={styles.container}>
+            {loading &&
+            <LoadingNotification />
+                }
             <ErrorNotification />
             <SettingsView/>
             <MonthLeaveView />
@@ -23,6 +31,7 @@ export default function App() {
         </View>
         </SettingsProvider>
         </ErrorProvider>
+        </LoadingProvider>
     );
 }
 

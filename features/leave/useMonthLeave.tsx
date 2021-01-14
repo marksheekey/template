@@ -5,17 +5,18 @@ import {useEffect, useState} from "react";
 import {LeaveUI} from "./repo/LeaveUI";
 import {setCallBack} from "../../services/setCallBack";
 import {useError} from "../../global/ErrorContext";
+import {useLoading} from "../../global/LoadingContext";
 
 export const useMonthLeave = () => {
     const clockService = JodaClockService.getInstance()
     const leaveRepo = LeaveRepo.getInstance(LeaveAPI.getInstance(), clockService)
     const [leave, setLeave] = useState([] as LeaveUI[])
     const [startDate, setStartDate] = useState("2020-01-01")
-    const [loading, setLoading] = useState(false)
+    const {isLoading} = useLoading()
     const { addError } = useError();
 
     useEffect(() => {
-        leaveRepo.fetchLeaveForMonth(startDate, setCallBack(addError, setLoading, setLeave)).then()
+        leaveRepo.fetchLeaveForMonth(startDate, setCallBack(addError, isLoading, setLeave)).then()
     }, [startDate])
 
 
@@ -29,5 +30,5 @@ export const useMonthLeave = () => {
         addError("Leave: Prev")
     }
 
-    return { leave, nextMonth, previousMonth, loading}
+    return { leave, nextMonth, previousMonth}
 }
