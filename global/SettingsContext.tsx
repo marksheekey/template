@@ -9,8 +9,7 @@ import SettingsAPI from "../services/api/settingsapi/SettingsAPI";
 type SettingsContextType = {
     settings: RotaSettings,
     expiry: number,
-    addSettings: (settings: RotaSettings) => void,
-    addExpiry: (millis: number) => void
+    addSettings: (settings: RotaSettings) => void
     refresh: () => void,
 }
 
@@ -18,7 +17,6 @@ export const SettingsContext = React.createContext<SettingsContextType>({
         settings: {} as RotaSettings,
         expiry: 0,
         addSettings: (settings: RotaSettings) => {},
-        addExpiry: (millis: number) => {},
         refresh: () => {}
     }
 );
@@ -56,7 +54,6 @@ export const SettingsProvider: FunctionComponent = ({children}) => {
             setSettings(rotaSettings)
             setExpiry(now + 10000)
         }, []),
-        addExpiry: useCallback((rotaExpiry: number) => setExpiry(rotaExpiry), []),
         refresh: () => {setRefresher(!refresher)}
     };
 
