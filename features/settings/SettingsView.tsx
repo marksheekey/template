@@ -1,10 +1,19 @@
-import React from "react";
-import {Button, StyleSheet, Text, View} from "react-native";
-import {useSettings} from "../../global/SettingsContext";
+import React, {useEffect} from "react";
+import {StyleSheet, Text, View} from "react-native";
+import {useDispatch, useSelector} from "react-redux";
+import { SettingsState} from "../../global/redux/reducers/settingsReducer";
+import {fetchData} from "../../global/redux/actions/actions";
 
 export const SettingsView: React.FunctionComponent = () => {
-    const {settings, refresh} = useSettings()
+    const selectSetings = (state: SettingsState) => state.settings
+    const settings = useSelector(selectSetings)
+    const dispatch = useDispatch()
 
+    useEffect(() => {
+        //dispatch(fetchData())
+    }, [])
+
+    dispatch(fetchData())
 
     return (
         <View style={styles.container}>
@@ -14,7 +23,6 @@ export const SettingsView: React.FunctionComponent = () => {
                 <Text>Early clock in minutes {settings.early_clock_in_minutes}</Text>
             </View>
             }
-            <Button title={"Refresh"} onPress={refresh}/>
         </View>
     );
 }

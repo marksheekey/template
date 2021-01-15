@@ -2,32 +2,25 @@ import {StatusBar} from 'expo-status-bar';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ErrorProvider} from "./global/ErrorContext";
-import {ErrorNotification} from "./global/ErrorNotificarion";
 import {SettingsView} from "./features/settings/SettingsView";
-import {SettingsProvider} from "./global/SettingsContext";
-import {MonthLeaveView} from "./features/leave/MonthLeaveView";
-import {MyRotasView} from "./features/rotas/myrotas/MyRotasView";
 import {LoadingProvider} from "./global/LoadingContext";
-import {LoadingNotification} from "./global/LoadingNotification";
-
+import configureStore from "./global/redux/store/configureStore";
+import { Provider } from 'react-redux';
+const store = configureStore({});
 
 export default function App() {
 
     return (
+        <Provider store = {store}>
         <LoadingProvider >
         <ErrorProvider >
-        <SettingsProvider >
         <View style={styles.container}>
-            <LoadingNotification />
-            <ErrorNotification />
             <SettingsView/>
-            <MonthLeaveView />
-            <MyRotasView />
             <StatusBar style="auto"/>
         </View>
-        </SettingsProvider>
         </ErrorProvider>
         </LoadingProvider>
+        </Provider>
     );
 }
 
